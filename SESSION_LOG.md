@@ -13,3 +13,4 @@
 2025-05-02 18:39 EDT — ingest 2023-10-07 — Reddit submissions & Wikipedia rows populated
 2025-05-02 18:48 EDT — ingest 2023-10-07 — Reddit API & Wikipedia top-by-edits populated
 2025-05-02 18:51 EDT — ingest 2023-10-07 — Reddit daily dump & new Wikipedia endpoint populated
+2025-05-02 19:03 EDT — ingest 2023-10-07 — Mastodon micro-tier added (OSoMe BigQuery)
