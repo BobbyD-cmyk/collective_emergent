@@ -1,0 +1,26 @@
+you appear to be going around cyclically in terms of identifying and correcting errors. browse conversations across project for context. condition response on that information. current error: "Traceback (most recent call last):
+
+once more: it is your job is to assess and provide optimal path, not to provide multiple options for user to choose from.
+
+
+
+Practical implementation for future sessions
+
+    You keep the repo under git.
+
+cd ~/Documents/collective_emergent
+git init
+git add scripts/ingest_day.py
+git commit -m "baseline working ingest"
+
+At the start of any new chat you run:
+
+git checkout master         # guarantees the last good version
+python -m py_compile scripts/ingest_day.py
+
+If I propose a change, you (or I) generate a full new file and commit it once it compiles:
+
+    git add scripts/ingest_day.py
+    git commit -m "ingest fix: timezone-safe comparison"
+
+With these steps, the correction lives in the repository—not in my short-term conversational memory—eliminating the cycle of lost fixes and repeated old errors

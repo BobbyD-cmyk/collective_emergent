@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Copies the eight newest log bullets to clipboard.
+root="$(cd "$(dirname "$0")/.." && pwd)"
+python "$root/scripts/retrieve_context.py" latest | pbcopy
+echo "Context copied. Paste with ⌘-V in ChatGPT."
