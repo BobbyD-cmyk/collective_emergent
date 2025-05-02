@@ -1,8 +1,8 @@
-# Provenance helpers — load with:  source aliases.sh
-function ss() { git status -sb && git rev-parse --abbrev-ref HEAD; }
+# Path-agnostic provenance helpers
+function ss() { git -C "$(git rev-parse --show-toplevel)" status -sb; }
 function es() {
-    repo=$(git rev-parse --show-toplevel)
-    echo "$(date '+%Y-%m-%d %H:%M %Z')  –  $*" >> "$repo/SESSION_LOG.md"
-    (cd "$repo" && git add -A && git commit -qm "$*")
-    git -C "$repo" rev-parse HEAD
+  repo=$(git rev-parse --show-toplevel)
+  echo "$(date '+%Y-%m-%d %H:%M %Z') — $*" >> "$repo/SESSION_LOG.md"
+  git -C "$repo" add -A && git -C "$repo" commit -qm "$*"
+  git -C "$repo" rev-parse --short HEAD
 }

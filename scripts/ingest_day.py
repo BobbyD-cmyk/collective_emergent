@@ -49,9 +49,9 @@ def gdelt_df(day):
 
 def main():
     day, out = arg_day(), ensure_out(arg_day())
-    print("→ Reddit …");   reddit_df(day).to_parquet(out/"reddit.parquet","zstd")
-    print("→ Wikipedia …");wiki_df(day)  .to_parquet(out/"wikipedia.parquet","zstd")
-    print("→ GDELT …");    gdelt_df(day) .to_parquet(out/"gdelt.parquet","zstd")
+    print("→ Reddit …");   reddit_df(day).to_parquet(out/"reddit.parquet","zstd", engine="fastparquet")
+    print("→ Wikipedia …");wiki_df(day)  .to_parquet(out/"wikipedia.parquet","zstd", engine="fastparquet")
+    print("→ GDELT …");    gdelt_df(day) .to_parquet(out/"gdelt.parquet","zstd", engine="fastparquet")
     print(f"✓ ingest complete → {out}")
 
 if __name__ == "__main__":
