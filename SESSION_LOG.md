@@ -3,3 +3,4 @@
 2025-05-02 12:17 EDT — ingest 2023-10-07 final — path-agnostic helpers
 2025-05-02 17:47 EDT — ingest 2023-10-07 — GDELT S3 mirror fixed and run
 2025-05-02 17:48 EDT — ingest 2023-10-07 — GDELT S3 mirror fixed and run
+2025-05-02 17:55 EDT — ingest 2023-10-07 — clean script, S3 GDELT, parquet ok
