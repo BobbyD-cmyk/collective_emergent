@@ -16,3 +16,4 @@
 2025-05-02 19:03 EDT — ingest 2023-10-07 — Mastodon micro-tier added (OSoMe BigQuery)
 2025-05-02 19:05 EDT — ingest 2023-10-07 — Mastodon micro-tier populated (OSoMe BigQuery)
 2025-05-02 19:06 EDT — ingest 2023-10-07 — Mastodon micro-tier fixed, dataset complete
+2025-05-02 19:09 EDT — ingest 2023-10-07 — Mastodon micro tier + Wikipedia meso tier regenerated
