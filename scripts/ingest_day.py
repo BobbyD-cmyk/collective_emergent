@@ -1,58 +1,40 @@
 #!/usr/bin/env python3
-# one-day ingest – 7 Oct 2023  (Reddit · Wikipedia · GDELT)
-
 import sys, pathlib, datetime as dt, io, zipfile, requests, pandas as pd, warnings
-
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 RAW  = ROOT / "data" / "raw"
 
 def arg_day():
-    if len(sys.argv) != 2:
-        sys.exit("Usage: ./ingest_day.py YYYY-MM-DD")
+    if len(sys.argv)!=2: sys.exit("Usage: ./ingest_day.py YYYY-MM-DD")
     return dt.date.fromisoformat(sys.argv[1])
 
-def ensure_out(d):
+def outdir(d):
     p = RAW / d.isoformat(); p.mkdir(parents=True, exist_ok=True); return p
 
-# 1 ▸ Reddit comment slice (Pushshift)
 def reddit_df(day):
-    a = int(dt.datetime.combine(day, dt.time.min).timestamp())
-    b = int(dt.datetime.combine(day, dt.time.max).timestamp())
+    a = int(dt.datetime.combine(day,dt.time.min).timestamp())
+    b = int(dt.datetime.combine(day,dt.time.max).timestamp())
     url = f"https://api.pushshift.io/reddit/comment/search/?after={a}&before={b}&size=2000"
-    resp = requests.get(url, timeout=30).json()
-    if "data" not in resp or not resp["data"]:          # API outage or empty window
-        warnings.warn("Pushshift returned no data; writing empty reddit.parquet")
-        return pd.DataFrame()
-    data = resp["data"]
-    return pd.DataFrame({
-        "id":      [c.get("id")         for c in data],
-        "utc":     [c.get("created_utc")for c in data],
-        "author":  [c.get("author")     for c in data],
-        "sub":     [c.get("subreddit")  for c in data],
-        "body":    [c.get("body")       for c in data]
-    })
+    js  = requests.get(url,timeout=30).json(); data = js.get("data", [])
+    if not data:
+        warnings.warn("Pushshift empty; writing zero-row Parquet"); return pd.DataFrame()
+    return pd.DataFrame([{k:c.get(k) for k in ("id","created_utc","author","subreddit","body")} for c in data])
 
-# 2 ▸ Wikipedia edited-pages top
 def wiki_df(day):
-    y,m,d = day.year, day.month, day.day
-    api = ("https://wikimedia.org/api/rest_v1/metrics/edited-pages/top/"
-           f"en.wikipedia/all-editor-types/all-page-types/{y}/{m:02d}/{d:02d}")
-    r = requests.get(api, timeout=30); r.raise_for_status()
+    # month-level top-by-edits (daily list is not available)
+    y,m = day.year, day.month
+    url = ( "https://wikimedia.org/api/rest_v1/metrics/edited-pages/top-by-edits/"
+            f"en.wikipedia.org/all-editor-types/all-page-types/{y}/{m:02d}/all-days")
+    r = requests.get(url, timeout=30); r.raise_for_status()
     return pd.DataFrame(r.json()["items"][0]["results"])
 
-# 3 ▸ GDELT events daily CSV.ZIP
 def gdelt_df(day):
-    zurl = f"https://data.gdeltproject.org/events/{day:%Y%m%d}.export.CSV.zip"
-    buf  = io.BytesIO(requests.get(zurl, timeout=60).content)
-    with zipfile.ZipFile(buf) as zf, zf.open(zf.namelist()[0]) as f:
-        return pd.read_csv(f, sep="\t", low_memory=False)
+    ymd = day.strftime("%Y%m%d")
+    url = f"https://gdelt-open-data.s3.amazonaws.com/events/{ymd}.export.csv.zip"
+    return pd.read_csv(url, compression="zip", sep="\t", low_memory=False)
+    d = arg_day(); tgt = outdir(d)
+    reddit_df(d).to_parquet(tgt/"reddit.parquet",   compression="zstd", engine="fastparquet")
+    wiki_df(d)  .to_parquet(tgt/"wikipedia.parquet",compression="zstd", engine="fastparquet")
+    gdelt_df(d) .to_parquet(tgt/"gdelt.parquet",    compression="zstd", engine="fastparquet")
+    print(f"✓ ingest complete → {tgt}")
 
-def main():
-    day, out = arg_day(), ensure_out(arg_day())
-    print("→ Reddit …");   reddit_df(day).to_parquet(out/"reddit.parquet","zstd", engine="fastparquet")
-    print("→ Wikipedia …");wiki_df(day)  .to_parquet(out/"wikipedia.parquet","zstd", engine="fastparquet")
-    print("→ GDELT …");    gdelt_df(day) .to_parquet(out/"gdelt.parquet","zstd", engine="fastparquet")
-    print(f"✓ ingest complete → {out}")
-
-if __name__ == "__main__":
-    main()
+if __name__=="__main__": main()
