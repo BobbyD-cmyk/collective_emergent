@@ -23,34 +23,36 @@ def outdir(day: dt.date) -> pathlib.Path:
     return p
 
 # ── 1 ▸ Reddit sample (≤2 000 comments, no key) ──────────────────────────
-def fetch_reddit(day: dt.date) -> pd.DataFrame:
-    after  = int(dt.datetime.combine(day, dt.time.min).timestamp())
-    before = int(dt.datetime.combine(day, dt.time.max).timestamp())
-    url = (f"https://api.pushshift.io/reddit/comment/search/"
-           f"?after={after}&before={before}&size=2000")
-    js   = requests.get(url, timeout=30).json()
-    data = js.get("data", [])
-    if not data:
-        warnings.warn("Pushshift returned zero rows")
-        return pd.DataFrame()
-    return pd.DataFrame([{
-        "id":        c.get("id"),
-        "created_utc": c.get("created_utc"),
-        "author":    c.get("author"),
-        "subreddit": c.get("subreddit"),
-        "body":      c.get("body")
-    } for c in data])
-
-# ── 2 ▸ Wikipedia edited-pages (month list covers any day) ───────────────
-def fetch_wikipedia(day: dt.date) -> pd.DataFrame:
-    y, m = day.year, day.month
-    url = ("https://wikimedia.org/api/rest_v1/metrics/edited-pages/top-by-edits/"
-           f"en.wikipedia.org/all-editor-types/all-page-types/{y}/{m:02d}/all-days")
-    r = requests.get(url, timeout=30)
-    r.raise_for_status()
-    return pd.DataFrame(r.json()["items"][0]["results"])
-
-# ── 3 ▸ GDELT daily events (S3 mirror, valid cert) ───────────────────────
+def fetch_reddit(day):
+    """Return all Reddit comments for *day* from Pushshift monthly dump.
+       Downloads the 2-GB .zst file once, streams & slices the target date."""
+    import zstandard as zstd, json, datetime as dt, io, requests
+    month_file = pathlib.Path(f"RC_{day:%Y-%m}.zst")
+    if not month_file.exists():
+        url = f"https://files.pushshift.io/reddit/comments/{month_file.name}"
+        print("↓ downloading", month_file.name)
+        with requests.get(url, stream=True) as r:
+            r.raise_for_status()
+            with open(month_file, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=2**20):
+                    f.write(chunk)
+    rows = []
+    tgt = day
+    with open(month_file, 'rb') as fh, zstd.ZstdDecompressor().stream_reader(fh) as zr:
+        for line in io.TextIOWrapper(zr, encoding='utf-8'):
+            c = json.loads(line)
+            if dt.datetime.utcfromtimestamp(c['created_utc']).date() == tgt:
+                rows.append({k: c.get(k) for k in
+                    ('id','created_utc','author','subreddit','body')})
+    return pd.DataFrame(rows)
+def fetch_wikipedia(day):
+    """Return the full top-edited list for a single UTC day."""
+    y,m,d = day.year, day.month, day.day
+    url = ( "https://wikimedia.org/api/rest_v1/metrics/edited-pages/top/"
+            f"en.wikipedia/all-editor-types/all-page-types/{y}/{m:02d}/{d:02d}" )
+    r = requests.get(url, timeout=30); r.raise_for_status()
+    # items[0]['results'] is the list we actually need
+    return pd.DataFrame(r.json()['items'][0]['results'])
 def fetch_gdelt(day):
     """Download daily GDELT file, trying both .CSV and .csv variants."""
     ymd = day.strftime("%Y%m%d")
