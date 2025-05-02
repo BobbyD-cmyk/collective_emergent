@@ -46,12 +46,11 @@ def fetch_reddit(day):
                     ('id','created_utc','author','subreddit','body')})
     return pd.DataFrame(rows)
 def fetch_wikipedia(day):
-    """Return the full top-edited list for a single UTC day."""
+    """Return Wikimedia *edited-pages/top* list for exactly one UTC day."""
     y,m,d = day.year, day.month, day.day
-    url = ( "https://wikimedia.org/api/rest_v1/metrics/edited-pages/top/"
-            f"en.wikipedia/all-editor-types/all-page-types/{y}/{m:02d}/{d:02d}" )
+    url = ("https://wikimedia.org/api/rest_v1/metrics/edited-pages/top/"
+           f"en.wikipedia/all-editor-types/all-page-types/{y}/{m:02d}/{d:02d}")
     r = requests.get(url, timeout=30); r.raise_for_status()
-    # items[0]['results'] is the list we actually need
     return pd.DataFrame(r.json()['items'][0]['results'])
 def fetch_gdelt(day):
     """Download daily GDELT file, trying both .CSV and .csv variants."""

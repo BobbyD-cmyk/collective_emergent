@@ -7,3 +7,4 @@
 2025-05-02 18:03 EDT — ingest 2023-10-07 — verified all three Parquet files present
 2025-05-02 18:08 EDT — ingest 2023-10-07 — GDELT fetched via HTTP mirror, ingest complete
 2025-05-02 18:26 EDT — ingest 2023-10-07 — Reddit full comments ingested
+2025-05-02 18:28 EDT — ingest 2023-10-07 — wikipedia rows fixed (≈30 rows ×6 cols)
