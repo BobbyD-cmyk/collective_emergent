@@ -23,3 +23,4 @@
 2025-05-02 19:18 EDT — ingest 2023-10-07 — Mastodon micro-tier successful run
 2025-05-02 19:21 EDT — ingest 2023-10-07 — Reddit micro-tier populated via Zenodo dump
 2025-05-02 19:23 EDT — ingest 2023-10-07 — Reddit micro-tier completed (Zenodo dump slice)
+2025-05-02 19:26 EDT — ingest 2023-10-07 — Reddit micro-tier from R2 daily dump
