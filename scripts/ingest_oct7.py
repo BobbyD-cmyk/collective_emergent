@@ -8,7 +8,6 @@ DAY  = dt.date(2023, 10, 7)
 
 # ── micro ▸ Mastodon (OSoMe BigQuery, anonymous creds) ───────────────────────
 def ingest_mastodon():
-    from google.auth.credentials import AnonymousCredentials as anonymous_credentials
     import pandas_gbq as gbq
     q = f"""
       SELECT  id,
@@ -22,7 +21,6 @@ def ingest_mastodon():
     """
     creds = anonymous_credentials()
     df = gbq.read_gbq(q, project_id="bigquery-public-data",
-                      credentials=creds, progress_bar_type=None)
     df.to_parquet(RAW/"mastodon.parquet", compression="zstd", engine="fastparquet")
     print("✓ mastodon.parquet rows =", len(df))
 
