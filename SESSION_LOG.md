@@ -10,3 +10,4 @@
 2025-05-02 18:28 EDT — ingest 2023-10-07 — wikipedia rows fixed (≈30 rows ×6 cols)
 2025-05-02 18:33 EDT — ingest 2023-10-07 — Reddit submissions daily dump ingested
 2025-05-02 18:38 EDT — ingest 2023-10-07 — Reddit submissions dump ingested successfully
+2025-05-02 18:39 EDT — ingest 2023-10-07 — Reddit submissions & Wikipedia rows populated
