@@ -25,3 +25,4 @@
 2025-05-02 19:23 EDT — ingest 2023-10-07 — Reddit micro-tier completed (Zenodo dump slice)
 2025-05-02 19:26 EDT — ingest 2023-10-07 — Reddit micro-tier from R2 daily dump
 2025-05-02 22:19 EDT — ingest 2023-10-07 — micro tier from daily GDELT-GKG (secure BigQuery)
+2025-05-02 22:50 EDT — ingest 2023-10-07 — micro tier from daily GDELT-GKG (secure BigQuery)
