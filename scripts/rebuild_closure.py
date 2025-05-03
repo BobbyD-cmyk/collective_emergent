@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+import sys, pathlib, pickle, pandas as pd, networkx as nx
+base = pathlib.Path(sys.argv[1])
+micro = pd.read_parquet(base/'gkg.parquet')['Themes'].str.lower()
+meso  = pd.read_parquet(base/'wikipedia_revisions.parquet').motif.str.lower()
+macro = pd.read_parquet(base/'gdelt.parquet').astype(str).agg(' '.join,axis=1).str.lower()
+def top(s): return set(s.str.extractall(r'([a-z0-9]{3,})')[0].value_counts().head(800).index)
+m1,m2,m3=top(micro),top(meso),top(macro)
+G=nx.Graph()
+for t in m1: G.add_node('micro:'+t,tier='micro')
+for t in m2: G.add_node('meso:'+t,tier='meso')
+for t in m3: G.add_node('macro:'+t,tier='macro')
+for t in m1&m2: G.add_edge('micro:'+t,'meso:'+t,tier='micro–meso')
+for t in m1&m3: G.add_edge('micro:'+t,'macro:'+t,tier='micro–macro')
+for t in m2&m3: G.add_edge('meso:'+t,'macro:'+t,tier='meso–macro')
+pickle.dump(G,open(base/'closure_graph.gpickle','wb'))
+print("graph rebuilt — nodes",G.number_of_nodes(),"edges",G.number_of_edges())
