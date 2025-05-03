@@ -36,3 +36,4 @@
 2025-05-03 07:30 EDT — step 3 final — graph pickled via stdlib, no networkx IO issues
 2025-05-03 07:34 EDT — step 3 rebuilt — token normalisation added, edges populated
 2025-05-03 07:36 EDT — step 3 final — lexical harmonisation, closure graph populated
+2025-05-03 07:37 EDT — step 3 rebuilt — macro text cols autodetected, closure graph written
