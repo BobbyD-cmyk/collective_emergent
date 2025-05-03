@@ -30,3 +30,4 @@
 2025-05-03 07:15 EDT — step 3 completed — TF-IDF motifs + closure graph for 2023-10-07
 2025-05-03 07:17 EDT — step 3 rebuilt — correct page_title column used
 2025-05-03 07:19 EDT — step 3 rebuilt — meso column autodetected, closure graph written
+2025-05-03 07:25 EDT — step 3 rebuilt — macro column autodetected, closure graph finalized
