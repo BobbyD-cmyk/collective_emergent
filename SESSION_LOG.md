@@ -27,3 +27,4 @@
 2025-05-02 22:19 EDT — ingest 2023-10-07 — micro tier from daily GDELT-GKG (secure BigQuery)
 2025-05-02 22:50 EDT — ingest 2023-10-07 — micro tier from daily GDELT-GKG (secure BigQuery)
 2025-05-02 22:51 EDT — ingest 2023-10-07 — micro tier = daily GDELT-GKG (secure BigQuery)
+2025-05-03 07:15 EDT — step 3 completed — TF-IDF motifs + closure graph for 2023-10-07
