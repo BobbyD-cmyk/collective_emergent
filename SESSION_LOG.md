@@ -49,3 +49,4 @@
 2025-05-03 08:46 EDT — step 5 — lag validation regenerated with corrected script
 2025-05-03 08:47 EDT — step 5 — lag validation succeeded (meso optional)
 2025-05-03 08:47 EDT — step 5 — lag validation final, datetime fix applied
+2025-05-03 08:48 EDT — step 5 — lag validation succeeded with mixed-date parser
