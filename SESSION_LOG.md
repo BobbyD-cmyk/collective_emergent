@@ -33,3 +33,4 @@
 2025-05-03 07:25 EDT — step 3 rebuilt — macro column autodetected, closure graph finalized
 2025-05-03 07:26 EDT — step 3 final — text columns auto-detected, closure graph built
 2025-05-03 07:27 EDT — step 3 fix — graph saved with nx.readwrite.gpickle.write_gpickle
+2025-05-03 07:30 EDT — step 3 final — graph pickled via stdlib, no networkx IO issues
