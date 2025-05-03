@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
-import sys, csv, re, requests, datetime as dt, pathlib, pandas as pd
+import sys, pathlib, pandas as pd, requests, re, datetime as dt
 timeline_csv, outparq = map(pathlib.Path, sys.argv[1:])
-motifs=set(pd.read_csv(timeline_csv).motif.unique())
-def revs(title):
-    url=f"https://en.wikipedia.org/w/index.php?title={title}&action=history&limit=500&offset=&dir=prev"
-    html=requests.get(url,timeout=30).text
-    return re.findall(r'data-timestamp="([^"]+)"',html)
+motifs=pd.read_csv(timeline_csv).motif.unique()
 rows=[]
 for m in motifs:
-    r=revs(m.capitalize())
-    for ts in r:
-        rows.append([m,dt.datetime.fromisoformat(ts.replace('Z','+00:00'))])
+    url=f"https://en.wikipedia.org/w/index.php?title={m.capitalize()}&action=history&limit=500&dir=prev"
+    html=requests.get(url,timeout=30).text
+    for ts in re.findall(r'data-timestamp="([^"]+)"',html):
+        rows.append([m, dt.datetime.fromisoformat(ts.replace('Z','+00:00'))])
 pd.DataFrame(rows,columns=['motif','ts']).to_parquet(outparq,compression='zstd')

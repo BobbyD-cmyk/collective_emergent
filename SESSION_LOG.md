@@ -40,3 +40,4 @@
 2025-05-03 07:39 EDT — step 3 rebuilt — macro text cols autodetected, closure graph written
 2025-05-03 08:04 EDT — step 3 visual — motif graph saved as closure_graph_edges.png
 2025-05-03 08:09 EDT — step 4 — timelines built, meso augmented, graph rebuilt, narrative outline created
+2025-05-03 08:14 EDT — step 4 — timelines fixed, meso augmented, graph rebuilt, narrative outline created
