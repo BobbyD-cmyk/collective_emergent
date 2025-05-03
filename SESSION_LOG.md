@@ -38,3 +38,4 @@
 2025-05-03 07:36 EDT — step 3 final — lexical harmonisation, closure graph populated
 2025-05-03 07:37 EDT — step 3 rebuilt — macro text cols autodetected, closure graph written
 2025-05-03 07:39 EDT — step 3 rebuilt — macro text cols autodetected, closure graph written
+2025-05-03 08:04 EDT — step 3 visual — motif graph saved as closure_graph_edges.png
