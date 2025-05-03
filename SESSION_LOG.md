@@ -29,3 +29,4 @@
 2025-05-02 22:51 EDT — ingest 2023-10-07 — micro tier = daily GDELT-GKG (secure BigQuery)
 2025-05-03 07:15 EDT — step 3 completed — TF-IDF motifs + closure graph for 2023-10-07
 2025-05-03 07:17 EDT — step 3 rebuilt — correct page_title column used
+2025-05-03 07:19 EDT — step 3 rebuilt — meso column autodetected, closure graph written
