@@ -1,0 +1,93 @@
+cd ~/Documents/collective_emergent
+python - <<'PY'
+import pathlib, re, json, textwrap
+
+script = pathlib.Path('scripts/rebuild_closure.py')
+code   = script.read_text()
+
+patch = textwrap.dedent("""
+    # ---------- stop-word list ------------------------------------------
+    STOP = set(\"\"\"a an and are as at be by for from has in is it its of on
+                 that the to with was were will you your he she they we our
+                 this these those their not no yes if but or nor so than then
+                 when where which who whom whose why how what\", \" \"\")
+                 
+    def clean(t):
+        tokens = re.findall(r'[a-z0-9]{3,}', str(t).lower())
+        return ' '.join(tok for tok in tokens if tok not in STOP and not tok.isdigit())
+""")
+
+# replace the existing clean/tokens helpers with the patched version
+new_code = re.sub(r"# ---------- helpers[\s\S]+?# ---------- build",
+                  patch + "\n# ---------- build", code, flags=re.MULTILINE)
+
+script.write_text(new_code)
+print("✓ rebuild_closure.py patched – stop-words & digits removed")
+PY# Narrative outline — 2025-05-03
+
+* **china**  –  cross-tier: micro–macro
+* **city**  –  cross-tier: micro–macro
+* **capital**  –  cross-tier: micro–macro
+* **district**  –  cross-tier: micro–macro
+* **azerbaijan**  –  cross-tier: micro–macro
+* **local**  –  cross-tier: micro–macro
+* **19**  –  cross-tier: micro–macro
+* **university**  –  cross-tier: micro–macro
+* **1833**  –  cross-tier: micro–macro
+* **russian**  –  cross-tier: micro–macro
+* **russia**  –  cross-tier: micro–macro
+* **on**  –  cross-tier: micro–macro
+* **house**  –  cross-tier: micro–macro
+* **general**  –  cross-tier: micro–macro
+* **the**  –  cross-tier: micro–macro
+* **united**  –  cross-tier: micro–macro
+* **politics**  –  cross-tier: micro–macro
+* **american**  –  cross-tier: micro–macro
+* **new**  –  cross-tier: micro–macro
+* **police**  –  cross-tier: micro–macro
+* **arab**  –  cross-tier: micro–macro
+* **attack**  –  cross-tier: micro–macro
+* **180**  –  cross-tier: micro–macro
+* **prison**  –  cross-tier: micro–macro
+* **2167**  –  cross-tier: micro–macro
+* **death**  –  cross-tier: micro–macro
+* **federal**  –  cross-tier: micro–macro
+* **school**  –  cross-tier: micro–macro
+* **opinion**  –  cross-tier: micro–macro
+* **military**  –  cross-tier: micro–macro
+* **president**  –  cross-tier: micro–macro
+* **us**  –  cross-tier: micro–macro
+* **middle**  –  cross-tier: micro–macro
+* **135**  –  cross-tier: micro–macro
+* **palestinian**  –  cross-tier: micro–macro
+* **hamas**  –  cross-tier: micro–macro
+* **in**  –  cross-tier: micro–macro
+* **man**  –  cross-tier: micro–macro
+* **world**  –  cross-tier: micro–macro
+* **and**  –  cross-tier: micro–macro
+* **from**  –  cross-tier: micro–macro
+* **138**  –  cross-tier: micro–macro
+* **bank**  –  cross-tier: micro–macro
+* **minister**  –  cross-tier: micro–macro
+* **government**  –  cross-tier: micro–macro
+* **crm**  –  cross-tier: micro–macro
+* **1497**  –  cross-tier: micro–macro
+* **525**  –  cross-tier: micro–macro
+* **international**  –  cross-tier: micro–macro
+* **student**  –  cross-tier: micro–macro
+* **mil**  –  cross-tier: micro–macro
+* **news**  –  cross-tier: micro–macro
+* **to**  –  cross-tier: micro–macro
+* **med**  –  cross-tier: micro–macro
+* **for**  –  cross-tier: micro–macro
+* **of**  –  cross-tier: micro–macro
+* **state**  –  cross-tier: micro–macro
+* **media**  –  cross-tier: micro–macro
+* **war**  –  cross-tier: micro–macro
+* **national**  –  cross-tier: micro–macro
+* **maharashtra**  –  cross-tier: micro–macro
+* **white**  –  cross-tier: micro–macro
+* **business**  –  cross-tier: micro–macro
+* **support**  –  cross-tier: micro–macro
+* **massachusetts**  –  cross-tier: micro–macro
+* **gov**  –  cross-tier: micro–macro
