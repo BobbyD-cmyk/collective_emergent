@@ -31,3 +31,4 @@
 2025-05-03 07:17 EDT — step 3 rebuilt — correct page_title column used
 2025-05-03 07:19 EDT — step 3 rebuilt — meso column autodetected, closure graph written
 2025-05-03 07:25 EDT — step 3 rebuilt — macro column autodetected, closure graph finalized
+2025-05-03 07:26 EDT — step 3 final — text columns auto-detected, closure graph built
