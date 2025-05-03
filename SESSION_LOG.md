@@ -46,3 +46,4 @@
 2025-05-03 08:32 EDT — step 4 artefacts complete — timelines, wiki revisions, rebuilt graph, narrative outline
 2025-05-03 08:39 EDT — step 4 artefacts complete — timelines, wiki revisions, rebuilt graph, narrative outline
 2025-05-03 08:41 EDT — step 5 — temporal lag validation written to docs/step5_validation.csv
+2025-05-03 08:46 EDT — step 5 — lag validation regenerated with corrected script
