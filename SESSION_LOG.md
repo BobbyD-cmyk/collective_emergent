@@ -53,3 +53,4 @@
 2025-05-03 08:52 EDT — step 6 — inference report generated (lag+centrality ranking)
 2025-05-03 08:53 EDT — step 6 — inference report regenerated (tier prefix fix)
 2025-05-03 09:00 EDT — step 4 narrative edited without nano
+2025-05-03 09:06 EDT — step 7 — PDF report generated with Tectonic engine
