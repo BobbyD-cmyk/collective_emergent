@@ -13,7 +13,7 @@ LAGS   = pd.read_csv('docs/step5_validation.csv')
 TLINES = pd.read_csv('timelines.csv')
 
 deg = pd.Series(dict(GRAPH.degree()), name='deg')
-deg.index = deg.index.str.split(':',1).str[1]          # strip tier prefix
+deg.index = [s.split(":",1)[1] if ":" in s else s for s in deg.index]
 
 inf = (LAGS.merge(deg, left_on='motif', right_index=True, how='left')
             .sort_values('micro_to_macro_s')

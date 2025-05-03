@@ -51,3 +51,4 @@
 2025-05-03 08:47 EDT — step 5 — lag validation final, datetime fix applied
 2025-05-03 08:48 EDT — step 5 — lag validation succeeded with mixed-date parser
 2025-05-03 08:52 EDT — step 6 — inference report generated (lag+centrality ranking)
+2025-05-03 08:53 EDT — step 6 — inference report regenerated (tier prefix fix)
